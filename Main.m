@@ -19,10 +19,12 @@ scan_time = 2.0; % scan time en secondes
 lambda = cadence.low; % poisson cadence rate : you decide on this if u want to have low/mid/high. I only took mid as an example
 walking_time = 1.5; % again i took the same walking time for all pax, so remember to edit if u take varying walking times
 corridor_time = 4+4*rand(1,N); % between 4 and 8 seconds - IMPORTANT: AT THE MOMENT OVERTAKING IS ALLOWED , if u dont want overtaking then take the same corridor time for everyone - dont be surprised if pax 13 appears before pax 12 ye
-assigned_row = randi([1,J],1,N); % threesome tehee
 has_luggage = rand(1,N) < 0.75; % which passengers have luggage - i took 75% here
 luggage_time = 1+6*rand(1,N); % how long to stow luggage - between 1 and 7 seconds
-seat_number = randi([0,5],1,N); % seat positions within row (0-5) - please make sure that multiple ppl dont get the same seat assigned to them (I only took random here, and it happens here, maybe cuz the seed is 69 tehee)
+if N > J*6
+    error('Cannot assign unique seats: N=%d exceeds total capacity=%d.', N, J*6);
+end
+[assigned_row, seat_number] = assign_unique_seats(N, J); % unique row/seat assignment per passenger
 seat_interference_time = 2.0; % time to resolve seat interference
 eligibility = repmat("All",1,N); eligibility(1:3) = "PreboardList"; % which boarding group is each passenger in? This is for filtering passengers during different boarding phases. ( i put only the first three, make sure to try other possibilities)
 
@@ -367,6 +369,15 @@ end
 function events = push(events, time, prio, type, pid)
 events(end+1,:) = [time prio type pid];
 end
+
+function [assigned_row, seat_number] = assign_unique_seats(N, J)
+% Sample unique seat slots from the full cabin (J rows x 6 seats)
+all_slots = randperm(J*6, N); % sample without replacement
+
+assigned_row = ceil(all_slots / 6); % rows are 1..J
+seat_number = mod(all_slots - 1, 6); % seats are 0..5
+end
+
 
 function cabinVisu = initCabinVisu(J, N) %handler for visualization
     cabinVisu.J = J;
