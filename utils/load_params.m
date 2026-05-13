@@ -1,8 +1,12 @@
-function params = load_params()
+function params = load_params(seed)
 % Load all simulation parameters into a struct
 
 % rng seed
-params.seed = 69;
+if nargin >= 1 && ~isempty(seed)
+	params.seed = seed;
+else
+	params.seed = 69;
+end
 rng(params.seed)
 
 % Gate times

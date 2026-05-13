@@ -1,4 +1,4 @@
-function cabinVisu = initCabinVisu(J, N)
+function cabinVisu = cabin_visu(J, N)
 % Initialize cabin visualization figure and graphics objects
 
     cabinVisu.J = J;

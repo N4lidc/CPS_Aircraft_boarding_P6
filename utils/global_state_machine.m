@@ -1,4 +1,4 @@
-function [global_state, scanner, lambda, filter, events, cadence_pending] = handle_global_state_check(global_state, t, time_finalcall, time_close, scanner, lambda, filter, cadence, number_incorridor, max_incorridor, resume_incorridor, cadence_pending, events, PRIO)
+function [global_state, scanner, lambda, filter, events, cadence_pending] = global_state_machine(global_state, t, time_finalcall, time_close, scanner, lambda, filter, cadence, number_incorridor, max_incorridor, resume_incorridor, cadence_pending, events, PRIO)
 % Handle global state transitions (case 7 event type)
 
 fprintf("\nt=%.1f GLOBAL_STATE_CHECK (current: %s)\n", t, global_state);
