@@ -15,6 +15,14 @@ if P(pid).current_row == P(pid).assigned_row
         % No luggage, go directly to seating
         P(pid).state = "Seating";
         [P, events, seat_occupied, aisle_occupied, KPI] = try_seat(P, events, seat_occupied, aisle_occupied, pid, seat_interference_time, PRIO, t, KPI);
+        if P(pid).state == "Seated"
+            % Aisle opened immediately; re-check waiting passengers now.
+            for k = 1:numel(P)
+                if P(k).state == "Waiting" && P(k).current_row < P(k).assigned_row && aisle_occupied(P(k).current_row+2) == 0
+                    [P, events, aisle_occupied, seat_occupied, KPI] = try_advance(P, events, aisle_occupied, seat_occupied, t, k, walking_time, J, PRIO, seat_interference_time, KPI);
+                end
+            end
+        end
     end
     return;
 end
