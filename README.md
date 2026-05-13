@@ -132,14 +132,37 @@ These measures are used to compare boarding strategies:
 
 ```text
 .
-├── README.md
-├── src/
-│   ├── main.m
-├── tests/
-│  
-├── data/
+├── ExperimentRunner.m
+├── Main.m
+├── boarding/
+│   ├── back_to_front_strategy.m
+│   ├── create_gate_queue.m
+│   ├── half_block_mix_strategy.m
+│   ├── outside_in_strategy.m
+│   ├── random_strategy.m
+│   ├── reverse_pyramid_strategy.m
+│   └── steffen_strategy.m
+├── passengers/
+│   ├── assign_unique_seats.m
+│   ├── init_passengers.m
+│   ├── try_advance.m
+│   └── try_seat.m
+├── simulation/
+│   ├── handle_events.m
+│   ├── handle_global_state_check.m
+│   └── run_simulation.m
+├── utils/
+│   ├── global_state_machine.m
+│   ├── load_params.m
+│   ├── push.m
+│   └── truncnorm_sample.m
+├── visualization/
+│   ├── cabin_visu.m
+│   ├── initCabinVisu.m
+│   └── updateCabinVisu.m
 ├── results/
-└── docs/
+│   └── experiment_*.csv
+└── README.md
 ```
 
 ## Getting Started
@@ -160,7 +183,3 @@ These measures are used to compare boarding strategies:
 ## Project Context
 
 This project was developed as part of the 6th semester Computer Science project at Aalborg University.
-
-## License
-
-This repository is currently intended for academic project work. Add a license file if the repository should be made public or reused by others.
