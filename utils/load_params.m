@@ -2,7 +2,7 @@ function params = load_params()
 % Load all simulation parameters into a struct
 
 % rng seed
-params.seed = 69;
+params.seed = 7;
 rng(params.seed)
 
 % Gate times
