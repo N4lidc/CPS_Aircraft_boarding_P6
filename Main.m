@@ -35,7 +35,6 @@ delta_idx = 1; % just to keep track of the index when we will have a lot of pax
 t = 0;
 scan_busy_until = 0;
 aisle_occupied = zeros(1,J+1); % get it? cuz we start from 0 but cant use index 0 in matlab
-gate_queue = 1:N; % just the order of the queue in gate. I took 1 to 3 cuz I cba doing randomly. The point is that this is the order of passage of passengers
 corridor_wait = []; % I am sure that there are multiple ways of handling this better. So u dont have to stick to this. What i mean by this is just for pax who finished corridoring but cant enter aisle cuz entry is blocked
 
 number_incorridor = 0;
@@ -65,6 +64,16 @@ for i = 1:N
     P(i).t_seat_wait = NaN; % time seat interference resolves
     P(i).eligibility = eligibility(i); % which boarding group is the passenger in? This is for filtering passengers during different boarding phases. You can set it however you want, I just put None as default
 end
+
+
+% Choose boarding strategy
+boarding_strategy = "outside_in"; % options: "random", "back_to_front", "front_to_back", "outside_in"
+gate_queue = create_gate_queue(boarding_strategy, P, N);
+
+fprintf("\nBoarding strategy: %s\n", boarding_strategy);
+fprintf("Gate queue passenger IDs: %s\n", mat2str(gate_queue));
+fprintf("Gate queue rows: %s\n", mat2str([P(gate_queue).assigned_row]));
+fprintf("Gate queue eligibility: %s\n", strjoin(string({P(gate_queue).eligibility}), ", "));
 
 % seat occupancy tracking: seat_occupied(row, seat_number)
 seat_occupied = zeros(J+1, 6);
@@ -294,6 +303,21 @@ fprintf("\n=== THE RETARDS ARE IN ===\n"); % Ofc you need to add the other state
 seatedCount=sum(arrayfun(@(p)p.state=="Seated",P));
 fprintf("Number of retards seated: %d/%d\n",seatedCount,N);
 
+% KPI A) 1: Correctness and Validity Check - All passengers seated
+fprintf("\n=== KPI A) 1: CORRECTNESS AND VALIDITY CHECK ===\n");
+if seatedCount == N
+    fprintf("✓ PASS: All %d passengers are seated\n", N);
+    kpi_a1_pass = true;
+else
+    fprintf("✗ FAIL: Only %d/%d passengers seated\n", seatedCount, N);
+    kpi_a1_pass = false;
+    % Show passengers not seated and their states
+    unseated_idx = find(arrayfun(@(p)p.state~="Seated",P));
+    for idx = unseated_idx
+        fprintf("  Passenger %d: state=%s, row=%s\n", idx, P(idx).state, string(P(idx).current_row));
+    end
+end
+
 % I used a local function (the one called try_advance). local functions as
 % a rule go at the end of the script
 
@@ -482,4 +506,76 @@ function updateCabinVisu(cabinVisu, P, seat_occupied, aisle_occupied, t, global_
             cabinVisu.pText(i).Visible = 'off';
         end
     end
+end
+
+function gate_queue = create_gate_queue(boarding_strategy, P, N)
+
+    switch lower(string(boarding_strategy))
+
+        case "random"
+            gate_queue = random_strategy(N);
+
+        case "back_to_front"
+            gate_queue = back_to_front_strategy(P, N);
+
+        case "outside_in"
+            gate_queue = outside_in_strategy(P, N);
+
+        otherwise
+            error("Unknown boarding strategy: %s", boarding_strategy);
+    end
+end
+
+function gate_queue = random_strategy(N)
+% Random boarding:
+% Passengers board in a completely random order.
+
+    gate_queue = randperm(N);
+end
+
+function gate_queue = back_to_front_strategy(P, N)
+% Back-to-front boarding:
+% Passengers in higher row numbers board before passengers in lower row numbers.
+
+    passenger_ids = 1:N;
+    rows = [P.assigned_row];
+
+    [~, order] = sort(rows, "descend");
+
+    gate_queue = passenger_ids(order);
+end
+
+function gate_queue = outside_in_strategy(P, N)
+% Outside-in boarding:
+% Window seats board first, then middle seats, then aisle seats.
+%
+% Seat numbers:
+% 0 = A, 1 = B, 2 = C, 3 = D, 4 = E, 5 = F
+%
+% Window seats: 0 and 5
+% Middle seats: 1 and 4
+% Aisle seats:  2 and 3
+
+    passenger_ids = 1:N;
+    seat_numbers = [P.seat_number];
+
+    seat_priority = zeros(1, N);
+
+    for i = 1:N
+        seat = seat_numbers(i);
+
+        if seat == 0 || seat == 5
+            seat_priority(i) = 1;   % window seats first
+        elseif seat == 1 || seat == 4
+            seat_priority(i) = 2;   % middle seats second
+        elseif seat == 2 || seat == 3
+            seat_priority(i) = 3;   % aisle seats last
+        else
+            error("Invalid seat number for passenger %d: %d", i, seat);
+        end
+    end
+
+    [~, order] = sort(seat_priority, "ascend");
+
+    gate_queue = passenger_ids(order);
 end
