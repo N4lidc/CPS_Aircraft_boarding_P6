@@ -1,6 +1,10 @@
 function params = load_params()
 % Load all simulation parameters into a struct
 
+% rng seed
+params.seed = 69;
+rng(params.seed)
+
 % Gate times
 params.time_general = 120;
 params.time_finalcall = 720;
@@ -29,7 +33,7 @@ params.max_incorridor = 3;
 params.resume_incorridor = 1;
 
 % Boarding strategy: "random", "back_to_front", "front_to_back", "outside_in"
-params.boarding_strategy = "outside_in";
+params.boarding_strategy = "reverse_pyramid";
 
 % Visualization
 params.show_visu = (params.J <= 10);

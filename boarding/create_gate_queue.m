@@ -8,6 +8,8 @@ function gate_queue = create_gate_queue(boarding_strategy, P, N)
             gate_queue = back_to_front_strategy(P, N);
         case "outside_in"
             gate_queue = outside_in_strategy(P, N);
+        case "reverse_pyramid"
+            gate_queue = reverse_pyramid_strategy(P, N);
         otherwise
             error("Unknown boarding strategy: %s", boarding_strategy);
     end
