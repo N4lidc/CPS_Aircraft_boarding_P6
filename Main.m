@@ -5,7 +5,6 @@ rng(69); % fixed seed for reproducibility
 % Parameters: change/edit/add to these whenever needed
 
 % Gate times
-
 time_general = 120;
 time_finalcall = 720;
 time_close = 900;
