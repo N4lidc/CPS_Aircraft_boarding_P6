@@ -22,7 +22,7 @@ end
 if seat_blocked == 1
     % Seat is blocked, wait for interference to resolve
     P(pid).state = "WaitingForSeat";
-    P(pid).t_seat_wait = t + seat_interference_time;
+    P(pid).t_seat_wait = t + seat_interference_time(pid);
     if isnan(KPI.waitStartSeat(pid))
         KPI.waitStartSeat(pid) = t;
     end

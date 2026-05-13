@@ -23,7 +23,7 @@ switch type
                 pid = gate_queue(idx);
                 gate_queue(idx) = [];
                 fprintf("  START_SCAN Pax%d\n", pid);
-                scan_busy_until = t + scan_time;
+                scan_busy_until = t + scan_time(pid);
                 events = push(events, scan_busy_until, PRIO.SCAN, 2, pid);
                 dt = -log(max(rand(), eps)) / lambda;
                 events = push(events, t + dt, PRIO.CAD, 1, 0);

@@ -155,7 +155,7 @@ while ~isempty(events)
                     KPI.t_start = t;
                 end
                 fprintf("  START_SCAN Pax%d\n", pid);
-                scan_busy_until = t + params.scan_time;
+                scan_busy_until = t + params.scan_time(pid);
                 events = push(events, scan_busy_until, PRIO.SCAN, 2, pid);
                 dt = -log(max(rand(), eps)) / params.lambda;
                 events = push(events, t + dt, PRIO.CAD, 1, 0);

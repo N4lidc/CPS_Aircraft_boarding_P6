@@ -34,7 +34,7 @@ if nextPos <= J && aisle_occupied(nextPos+1) == 0
         KPI.waitTimeAisle(pid) = KPI.waitTimeAisle(pid) + (t - KPI.waitStartAisle(pid));
         KPI.waitStartAisle(pid) = NaN;
     end
-    P(pid).t_move = t + walking_time;
+    P(pid).t_move = t + walking_time(pid);
     events = push(events, P(pid).t_move, PRIO.MOVE, 4, pid);
     fprintf("  ADVANCE_START Pax%d %d->%d (move_done=%.1f)\n", pid, P(pid).current_row, nextPos, P(pid).t_move);
 else

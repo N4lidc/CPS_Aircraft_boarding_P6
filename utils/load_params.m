@@ -16,13 +16,33 @@ params.cadence = struct('low', 0.15, 'mid', 0.3, 'high', 0.45);
 % Passenger and cabin settings
 params.N = 60; % number of passengers
 params.J = 10; % number of rows (0, 1, ..., J)
-params.scan_time = 2.0; % scan time in seconds
 params.lambda = params.cadence.low; % poisson cadence rate
-params.walking_time = 1.5; % walking time per row
-params.corridor_time = 4 + 4*rand(1, params.N); % between 4-8 seconds (random per passenger)
+
+% Truncated normal parameters (passenger-dependent)
+params.walking_time_mu = 1.5;
+params.walking_time_sigma = 0.3;
+params.walking_time_min = 0.8;
+params.walking_time_max = 2.5;
+params.luggage_time_mu = 4.0;
+params.luggage_time_sigma = 1.5;
+params.luggage_time_min = 1.0;
+params.luggage_time_max = 7.0;
+
+% Uniform parameters (interaction delays)
+params.scan_time_min = 1.5;
+params.scan_time_max = 2.5;
+params.corridor_time_min = 4.0;
+params.corridor_time_max = 8.0;
+params.seat_interference_time_min = 1.0;
+params.seat_interference_time_max = 3.0;
+
+% Passenger-dependent samples
+params.walking_time = truncnorm_sample(params.walking_time_mu, params.walking_time_sigma, params.walking_time_min, params.walking_time_max, params.N);
+params.scan_time = params.scan_time_min + (params.scan_time_max - params.scan_time_min) * rand(1, params.N);
+params.corridor_time = params.corridor_time_min + (params.corridor_time_max - params.corridor_time_min) * rand(1, params.N);
 params.has_luggage = rand(1, params.N) < 0.75; % 75% have luggage
-params.luggage_time = 1 + 6*rand(1, params.N); % 1-7 seconds to stow luggage
-params.seat_interference_time = 2.0; % time to resolve seat interference
+params.luggage_time = truncnorm_sample(params.luggage_time_mu, params.luggage_time_sigma, params.luggage_time_min, params.luggage_time_max, params.N);
+params.seat_interference_time = params.seat_interference_time_min + (params.seat_interference_time_max - params.seat_interference_time_min) * rand(1, params.N);
 
 % Boarding eligibility (boarding groups)
 params.eligibility = repmat("All", 1, params.N);
