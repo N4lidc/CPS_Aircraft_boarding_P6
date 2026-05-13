@@ -61,7 +61,7 @@ KPI.time_backward_violations = 0;
 KPI.event_starvation = false;
 
 % Create gate queue
-gate_queue = create_gate_queue(params.boarding_strategy, P, params.N);
+gate_queue = create_gate_queue(params.boarding_strategy, P, params.N, params.J);
 
 fprintf("\nBoarding strategy: %s\n", params.boarding_strategy);
 fprintf("Gate queue passenger IDs: %s\n", mat2str(gate_queue));

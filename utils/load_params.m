@@ -14,7 +14,7 @@ params.time_close = 900;
 params.cadence = struct('low', 0.15, 'mid', 0.3, 'high', 0.45);
 
 % Passenger and cabin settings
-params.N = 20; % number of passengers
+params.N = 60; % number of passengers
 params.J = 10; % number of rows (0, 1, ..., J)
 params.scan_time = 2.0; % scan time in seconds
 params.lambda = params.cadence.low; % poisson cadence rate
@@ -33,7 +33,7 @@ params.max_incorridor = 3;
 params.resume_incorridor = 1;
 
 % Boarding strategy: "random", "back_to_front", "front_to_back", "outside_in"
-params.boarding_strategy = "reverse_pyramid";
+params.boarding_strategy = "steffen";
 
 % Visualization
 params.show_visu = (params.J <= 10);
