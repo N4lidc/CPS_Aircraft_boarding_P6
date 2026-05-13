@@ -170,7 +170,7 @@ while ~isempty(events)
                 if options.verbose
                     fprintf("  START_SCAN Pax%d\n", pid);
                 end
-                scan_busy_until = t + params.scan_time;
+                scan_busy_until = t + params.scan_time(pid);
                 events = push(events, scan_busy_until, PRIO.SCAN, 2, pid);
                 dt = -log(max(rand(), eps)) / params.lambda;
                 events = push(events, t + dt, PRIO.CAD, 1, 0);
