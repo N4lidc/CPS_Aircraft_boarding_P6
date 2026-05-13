@@ -1,8 +1,12 @@
-function params = load_params()
+function params = load_params(seed)
 % Load all simulation parameters into a struct
 
 % rng seed
-params.seed = 7;
+if nargin >= 1 && ~isempty(seed)
+	params.seed = seed;
+else
+	params.seed = 69;
+end
 rng(params.seed)
 
 % Gate times
@@ -52,8 +56,8 @@ params.eligibility(1:3) = "PreboardList";
 params.max_incorridor = 3;
 params.resume_incorridor = 1;
 
-% Boarding strategy: "random", "back_to_front", "front_to_back", "outside_in"
-params.boarding_strategy = "steffen";
+% Boarding strategy: "random", "back_to_front", "outside_in"
+params.boarding_strategy = "reverse_pyramid";
 
 % Visualization
 params.show_visu = (params.J <= 10);
