@@ -188,13 +188,6 @@ To run multiple simulations and save results into [results/](results), execute [
 
 The batch runner saves one summary CSV and one per-run CSV with a timestamped filename inside [results/](results).
 
-## Contributors
-
-- Casper 
-- Elma 
-- Nelisa 
-- Oskar 
-
 ## Project Context
 
-This project was developed as part of the 6th semester Computer Science project at Aalborg University.
+This project was developed as part of the 6th semester Computer Science project.
