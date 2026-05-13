@@ -37,8 +37,6 @@ The project focuses on selected boarding strategies. These include:
 - Half-Block mix boarding
 - Steffen boarding
 
-These strategies can be compared under the same operating conditions to analyze their impact on boarding time, congestion, waiting time, and interference.
-
 ## Model Structure
 
 ### Global State Machine
@@ -94,15 +92,6 @@ Included in the model:
 - Seat interference
 - Priority boarding conditions
 - Boarding strategy rules
-
-Outside the scope:
-
-- Open seating strategies
-- Deboarding
-- Airport logistics outside the boarding process
-- Checked baggage loading
-- Cabin crew operations
-- Multiple aircraft doors
 
 ## Evaluation
 
@@ -169,9 +158,35 @@ These measures are used to compare boarding strategies:
 
 ### Prerequisites
 
+- MATLAB installed on your machine
+- This repository downloaded or cloned to a local folder
+- No extra MATLAB toolboxes are required for the core simulation
+
 ### Installation
 
+1. Download or clone this repository.
+2. Open the repository root folder in MATLAB.
+3. Keep the repository root as the current folder when you run the scripts.
+4. You do not need to add folders to the MATLAB path manually; both entry-point scripts do that themselves.
+
 ### Running the Simulation
+
+To run one simulation, execute [Main.m](Main.m).
+
+This loads the default parameters from [utils/load_params.m](utils/load_params.m), runs the simulation through [simulation/run_simulation.m](simulation/run_simulation.m), and prints the selected boarding strategy in the MATLAB Command Window.
+
+If you want to try a different boarding strategy, edit `params.boarding_strategy` in [utils/load_params.m](utils/load_params.m) and run [Main.m](Main.m) again. Use one of these values:
+
+- `random`
+- `back_to_front`
+- `outside_in`
+- `reverse_pyramid`
+- `half_block_mix`
+- `steffen`
+
+To run multiple simulations and save results into [results/](results), execute [ExperimentRunner.m](ExperimentRunner.m).
+
+The batch runner saves one summary CSV and one per-run CSV with a timestamped filename inside [results/](results).
 
 ## Contributors
 
