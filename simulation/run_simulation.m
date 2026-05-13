@@ -195,13 +195,13 @@ while ~isempty(events)
         fprintf("  aisle: %s\n", mat2str(aisle_occupied));
     end
     if options.enable_pauses
-        pause(0.03);
+        %pause(0.03);
     end
     if params.show_visu && exist('visu', 'var') && isfield(visu, 'fig') && isvalid(visu.fig)
         updateCabinVisu(visu, P, seat_occupied, aisle_occupied, t, global_state, gate_queue, corridor_wait);
         drawnow limitrate;
         if options.enable_pauses
-            pause(0.05);
+            %pause(0.05);
         end
     end
 end

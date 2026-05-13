@@ -9,9 +9,9 @@ addpath(pwd, ...
     fullfile(pwd, 'utils'));
 
 % Experiment controls
-runs_per_config = 1;
-base_seed = 7; %7 og 9 be retarded stefen
-show_visualization = true;
+runs_per_config = 100;
+base_seed = 1; %7 og 9 be retarded stefen
+show_visualization = false;
 show_progress = true;
 
 % Base params for defaults

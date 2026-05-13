@@ -36,8 +36,8 @@ params.eligibility(1:3) = "PreboardList";
 params.max_incorridor = 3;
 params.resume_incorridor = 1;
 
-% Boarding strategy: "random", "back_to_front", "front_to_back", "outside_in"
-params.boarding_strategy = "steffen";
+% Boarding strategy: "random", "back_to_front", "outside_in"
+params.boarding_strategy = "reverse_pyramid";
 
 % Visualization
 params.show_visu = (params.J <= 10);
