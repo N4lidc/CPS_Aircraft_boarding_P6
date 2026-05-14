@@ -1,39 +1,44 @@
 # Aircraft Boarding CPS
-## Repository Structure
+
+## Project Context
+
+This project was developed as part of the 6th semester Computer Science project.
+If you want a more detailed explanation of what this project does, please read the [About](About.md) file.
 
 ```text
 .
-├── ExperimentRunner.m
-├── Main.m
+├── ExperimentRunner.m          – Runs multiple simulations across configurations and saves results to CSV
+├── Main.m                      – Runs a single simulation with parameters from load_params.m
 ├── boarding/
-│   ├── back_to_front_strategy.m
-│   ├── create_gate_queue.m
-│   ├── half_block_mix_strategy.m
-│   ├── outside_in_strategy.m
-│   ├── random_strategy.m
-│   ├── reverse_pyramid_strategy.m
-│   └── steffen_strategy.m
+│   ├── back_to_front_strategy.m            – Passengers board from rear rows forward
+│   ├── create_gate_queue.m                 – Dispatcher that selects the boarding strategy
+│   ├── half_block_mix_strategy.m           – Rows split into halves for boarding order
+│   ├── outside_in_strategy.m               – Window seats board before aisle seats
+│   ├── random_strategy.m                   – Passengers board in random order
+│   ├── reverse_pyramid_strategy.m          – Alternating rows and window/aisle pattern
+│   └── steffen_strategy.m                  – Optimized strategy to minimize aisle interference
 ├── passengers/
-│   ├── assign_unique_seats.m
-│   ├── init_passengers.m
-│   ├── try_advance.m
-│   └── try_seat.m
+│   ├── assign_unique_seats.m               – Assigns each passenger a unique seat
+│   ├── init_passengers.m                   – Creates initial passenger struct array
+│   ├── try_advance.m                       – Moves passenger to next state (AtGate → Scanned → ...)
+│   └── try_seat.m                          – Attempts to seat a passenger in assigned row
 ├── simulation/
-│   ├── handle_events.m
-│   ├── handle_global_state_check.m
-│   └── run_simulation.m
+│   ├── handle_events.m                     – Processes events from the event queue
+│   ├── handle_global_state_check.m         – Manages global state transitions (Preboard → General → ...)
+│   └── run_simulation.m                    – Main simulation loop and KPI tracker
 ├── utils/
-│   ├── global_state_machine.m
-│   ├── load_params.m
-│   ├── push.m
-│   └── truncnorm_sample.m
+│   ├── global_state_machine.m              – Global state machine logic for boarding phases
+│   ├── load_params.m                       – Loads all simulation parameters
+│   ├── push.m                              – Adds events to the event queue
+│   └── truncnorm_sample.m                  – Generates truncated normal distribution samples
 ├── visualization/
-│   ├── cabin_visu.m
-│   ├── initCabinVisu.m
-│   └── updateCabinVisu.m
+│   ├── cabin_visu.m                        – Draws cabin layout and passenger states
+│   ├── initCabinVisu.m                     – Initializes the visualization figure
+│   └── updateCabinVisu.m                   – Updates visualization after each event
 ├── results/
-│   └── experiment_*.csv
-└── README.md
+│   └── experiment_*.csv                    – Output CSV files from batch runs
+├── README.md
+└── About.md                                - Project context
 ```
 
 ## Getting Started
@@ -70,6 +75,3 @@ To run multiple simulations and save results into [results/](results), execute [
 
 The batch runner saves one summary CSV and one per-run CSV with a timestamped filename inside [results/](results).
 
-## Project Context
-
-This project was developed as part of the 6th semester Computer Science project.
