@@ -8,7 +8,7 @@ switch global_state
         scanner = 1; lambda = cadence.low; filter = "PreboardList";
         global_state = "Preboard";
         fprintf("Init -> Preboard\n");
-        events = push(events, 120, PRIO.GLOBAL, 7, 0);  % time_general hardcoded for now
+        events = push(events, 120, PRIO.GLOBAL, 7, 0);
         events = push(events, 0, PRIO.CAD, 1, 0);
 
     case "Preboard"

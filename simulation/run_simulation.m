@@ -135,7 +135,7 @@ while ~isempty(events)
 
     if type == 7
         % Handle global state check
-        [global_state, scanner, params.lambda, filter, events, cadence_pending] = handle_global_state_check(global_state, t, params.time_finalcall, params.time_close, scanner, params.lambda, filter, params.cadence, number_incorridor, params.max_incorridor, params.resume_incorridor, cadence_pending, events, PRIO);
+        [global_state, scanner, params.lambda, filter, events, cadence_pending] = global_state_machine(global_state, t, params.time_finalcall, params.time_close, scanner, params.lambda, filter, params.cadence, number_incorridor, params.max_incorridor, params.resume_incorridor, cadence_pending, events, PRIO);
     elseif type == 1
         % Cadence release - handle gate_queue locally since it needs modification
         cadence_pending = false;
@@ -179,7 +179,7 @@ while ~isempty(events)
         end
     else
         % Handle events types 2-6
-        [P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, scan_busy_until, cadence_pending, KPI] = handle_events(type, i, t, P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, gate_queue, global_state, scanner, scan_busy_until, cadence_pending, filter, params.walking_time, params.J, PRIO, params.seat_interference_time, params.max_incorridor, params.resume_incorridor, params.lambda, params.scan_time, params.corridor_time, params.N, KPI);
+        [P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, scan_busy_until, cadence_pending, KPI] = passenger_state_machine(type, i, t, P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, gate_queue, global_state, scanner, scan_busy_until, cadence_pending, filter, params.walking_time, params.J, PRIO, params.seat_interference_time, params.max_incorridor, params.resume_incorridor, params.lambda, params.scan_time, params.corridor_time, params.N, KPI);
     end
 
     if prev_global_state ~= "Hold" && global_state == "Hold"

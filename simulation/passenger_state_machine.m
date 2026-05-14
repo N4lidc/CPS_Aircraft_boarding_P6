@@ -1,4 +1,4 @@
-function [P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, scan_busy_until, cadence_pending, KPI] = handle_events(type, i, t, P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, gate_queue, global_state, scanner, scan_busy_until, cadence_pending, filter, walking_time, J, PRIO, seat_interference_time, max_incorridor, resume_incorridor, lambda, scan_time, corridor_time, N, KPI)
+function [P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, scan_busy_until, cadence_pending, KPI] = passenger_state_machine(type, i, t, P, events, aisle_occupied, seat_occupied, corridor_wait, number_incorridor, gate_queue, global_state, scanner, scan_busy_until, cadence_pending, filter, walking_time, J, PRIO, seat_interference_time, max_incorridor, resume_incorridor, lambda, scan_time, corridor_time, N, KPI)
 % Dispatcher for event types 1-6
 % Note: gate_queue is passed but should be modified in Main.m since it needs persistent updates
 
