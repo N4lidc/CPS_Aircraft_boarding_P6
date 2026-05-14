@@ -23,11 +23,10 @@ If you want a more detailed explanation of what this project does, please read t
 │   ├── try_advance.m                       – Moves passenger to next state (AtGate → Scanned → ...)
 │   └── try_seat.m                          – Attempts to seat a passenger in assigned row
 ├── simulation/
-│   ├── handle_events.m                     – Processes events from the event queue
-│   ├── handle_global_state_check.m         – Manages global state transitions (Preboard → General → ...)
+│   ├── global_state_machine.m              – Manages global state transitions (Preboard → General → ...)
+│   ├── passenger_state_machine.m           – Manages passenger state transitions
 │   └── run_simulation.m                    – Main simulation loop and KPI tracker
 ├── utils/
-│   ├── global_state_machine.m              – Global state machine logic for boarding phases
 │   ├── load_params.m                       – Loads all simulation parameters
 │   ├── push.m                              – Adds events to the event queue
 │   └── truncnorm_sample.m                  – Generates truncated normal distribution samples
