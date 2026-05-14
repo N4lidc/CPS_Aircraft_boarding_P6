@@ -9,7 +9,7 @@ addpath(pwd, ...
     fullfile(pwd, 'utils'));
 
 % Experiment controls
-runs_per_config = 100;
+runs_per_config = 1;
 base_seed = 1; %7 og 9 be retarded stefen
 show_visualization = false;
 show_progress = true;
