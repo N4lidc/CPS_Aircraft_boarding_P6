@@ -57,7 +57,7 @@ params.max_incorridor = 3;
 params.resume_incorridor = 1;
 
 % Boarding strategy: "random", "back_to_front", "outside_in"
-params.boarding_strategy = "reverse_pyramid";
+params.boarding_strategy = "steffen";
 
 % Visualization
 params.show_visu = (params.J <= 10);

@@ -60,6 +60,7 @@ KPI.seat_duplicate_violations = 0;
 KPI.negative_counter_violations = 0;
 KPI.time_backward_violations = 0;
 KPI.event_starvation = false;
+KPI.entry_block_count = 0;
 
 % Create gate queue
 gate_queue = create_gate_queue(params.boarding_strategy, P, params.N, params.J);
@@ -230,17 +231,52 @@ if ~isnan(KPI.t_start) && KPI.t_end >= KPI.t_start
 else
     KPI.boarding_time = NaN;
 end
+%
+KPI.total_wait_aisle=sum(KPI.waitTimeAisle);
+KPI.total_wait_seat=sum(KPI.waitTimeSeat);
+KPI.total_wait_entry=sum(KPI.waitTimeEntry);
+KPI.total_wait=KPI.total_wait_aisle+KPI.total_wait_seat+KPI.total_wait_entry;
 
+KPI.mean_wait_aisle=mean(KPI.waitTimeAisle);
+KPI.mean_wait_seat=mean(KPI.waitTimeSeat);
+KPI.mean_wait_entry=mean(KPI.waitTimeEntry);
+if any(KPI.waitTimeAisle>0)
+    KPI.mean_wait_aisle_nz=mean(KPI.waitTimeAisle(KPI.waitTimeAisle>0));
+else
+    KPI.mean_wait_aisle_nz=0;
+end
+if any(KPI.waitTimeSeat>0)
+    KPI.mean_wait_seat_nz=mean(KPI.waitTimeSeat(KPI.waitTimeSeat>0));
+else
+    KPI.mean_wait_seat_nz=0;
+end
+if any(KPI.waitTimeEntry>0)
+    KPI.mean_wait_entry_nz=mean(KPI.waitTimeEntry(KPI.waitTimeEntry>0));
+else
+    KPI.mean_wait_entry_nz=0;
+end
+
+KPI.unclosed_aisle_waits=sum(~isnan(KPI.waitStartAisle));
+KPI.unclosed_seat_waits=sum(~isnan(KPI.waitStartSeat));
+KPI.unclosed_entry_waits=sum(~isnan(KPI.waitStartEntry));
+KPI.all_waits_closed=KPI.unclosed_aisle_waits==0&&KPI.unclosed_seat_waits==0&&KPI.unclosed_entry_waits==0;
+%
 if ~isnan(KPI.boarding_time) && KPI.boarding_time > 0
     KPI.scanner_utilization = KPI.scan_busy_time / KPI.boarding_time;
     KPI.avg_scan_rate = KPI.n_scanned / KPI.boarding_time;
     KPI.aisle_occ_mean = KPI.aisle_occ_total / KPI.boarding_time;
     KPI.corridor_load_mean = KPI.corridor_load_total / KPI.boarding_time;
+    %
+    KPI.hold_fraction = KPI.hold_time / KPI.boarding_time;
+    %
 else
     KPI.scanner_utilization = NaN;
     KPI.avg_scan_rate = NaN;
     KPI.aisle_occ_mean = NaN;
     KPI.corridor_load_mean = NaN;
+    %
+    KPI.hold_fraction = NaN;
+    %
 end
 
 if ~KPI.all_seated && scanner == 1 && ~isempty(gate_queue)

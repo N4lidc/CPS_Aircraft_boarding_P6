@@ -9,7 +9,7 @@ switch type
         if scanner == 0
             fprintf(" scanner down (down haha... get it?)");
         elseif isempty(gate_queue)
-            fprintf(" no retard left\n");
+            fprintf(" no passenger left\n");
         elseif t < scan_busy_until
             events = push(events, scan_busy_until, PRIO.CAD, 1, 0);
             cadence_pending = true;
@@ -58,6 +58,9 @@ switch type
         else
             P(i).state = "Waiting";
             corridor_wait(end+1) = i;
+            %
+            KPI.entry_block_count=KPI.entry_block_count+1;
+            %
             if isnan(KPI.waitStartEntry(i))
                 KPI.waitStartEntry(i) = t;
             end
