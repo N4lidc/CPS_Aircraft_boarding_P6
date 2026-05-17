@@ -9,7 +9,7 @@ addpath(pwd, ...
     fullfile(pwd, 'utils'));
 
 % Experiment controls
-runs_per_config = 1;
+runs_per_config = 100;
 base_seed = 1; %7 og 9 be retarded stefen
 show_visualization = false;
 show_progress = true;
@@ -86,8 +86,10 @@ for s = 1:numel(strategies)
                     run_rows(run_row_idx).corridor_load_max = KPI.corridor_load_max;
                     run_rows(run_row_idx).hold_time = KPI.hold_time;
                     run_rows(run_row_idx).hold_episodes = KPI.hold_episodes;
+                    run_rows(run_row_idx).hold_fraction = KPI.hold_fraction;
                     run_rows(run_row_idx).seat_interference_count = KPI.seat_interference_count;
                     run_rows(run_row_idx).aisle_interference_count = KPI.aisle_interference_count;
+                    run_rows(run_row_idx).entry_block_count = KPI.entry_block_count;
                     run_rows(run_row_idx).aisle_binary_violations = KPI.aisle_binary_violations;
                     run_rows(run_row_idx).seat_binary_violations = KPI.seat_binary_violations;
                     run_rows(run_row_idx).seat_duplicate_violations = KPI.seat_duplicate_violations;
@@ -101,6 +103,21 @@ for s = 1:numel(strategies)
                     run_rows(run_row_idx).aisle_occ_mean = KPI.aisle_occ_mean;
                     run_rows(run_row_idx).corridor_load_mean = KPI.corridor_load_mean;
                     run_rows(run_row_idx).event_starvation = KPI.event_starvation;
+
+                    run_rows(run_row_idx).total_wait_aisle = KPI.total_wait_aisle;
+                    run_rows(run_row_idx).total_wait_seat = KPI.total_wait_seat;
+                    run_rows(run_row_idx).total_wait_entry = KPI.total_wait_entry;
+                    run_rows(run_row_idx).total_wait = KPI.total_wait;
+                    run_rows(run_row_idx).mean_wait_aisle = KPI.mean_wait_aisle;
+                    run_rows(run_row_idx).mean_wait_seat = KPI.mean_wait_seat;
+                    run_rows(run_row_idx).mean_wait_entry = KPI.mean_wait_entry;
+                    run_rows(run_row_idx).mean_wait_aisle_nz = KPI.mean_wait_aisle_nz;
+                    run_rows(run_row_idx).mean_wait_seat_nz = KPI.mean_wait_seat_nz;
+                    run_rows(run_row_idx).mean_wait_entry_nz = KPI.mean_wait_entry_nz;
+                    run_rows(run_row_idx).unclosed_aisle_waits = KPI.unclosed_aisle_waits;
+                    run_rows(run_row_idx).unclosed_seat_waits = KPI.unclosed_seat_waits;
+                    run_rows(run_row_idx).unclosed_entry_waits = KPI.unclosed_entry_waits;
+                    run_rows(run_row_idx).all_waits_closed = KPI.all_waits_closed;
 
                     run_rows(run_row_idx).t_seated = mat2str(KPI.t_seated);
                     run_rows(run_row_idx).waitStartAisle = mat2str(KPI.waitStartAisle);

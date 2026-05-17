@@ -5,13 +5,13 @@ function params = load_params(seed)
 if nargin >= 1 && ~isempty(seed)
 	params.seed = seed;
 else
-	params.seed = 69;
+	params.seed = 1;
 end
 rng(params.seed)
 
 % Gate times
 params.time_general = 120;
-params.time_finalcall = 720;
+params.time_finalcall = 300;
 params.time_close = 900;
 
 % Cadence enum
@@ -44,7 +44,7 @@ params.seat_interference_time_max = 3.0;
 params.walking_time = truncnorm_sample(params.walking_time_mu, params.walking_time_sigma, params.walking_time_min, params.walking_time_max, params.N);
 params.scan_time = params.scan_time_min + (params.scan_time_max - params.scan_time_min) * rand(1, params.N);
 params.corridor_time = params.corridor_time_min + (params.corridor_time_max - params.corridor_time_min) * rand(1, params.N);
-params.has_luggage = rand(1, params.N) < 0.75; % 75% have luggage
+params.has_luggage = rand(1, params.N) < 0.4; % 75% have luggage
 params.luggage_time = truncnorm_sample(params.luggage_time_mu, params.luggage_time_sigma, params.luggage_time_min, params.luggage_time_max, params.N);
 params.seat_interference_time = params.seat_interference_time_min + (params.seat_interference_time_max - params.seat_interference_time_min) * rand(1, params.N);
 
@@ -57,7 +57,7 @@ params.max_incorridor = 3;
 params.resume_incorridor = 1;
 
 % Boarding strategy: "random", "back_to_front", "outside_in"
-params.boarding_strategy = "steffen";
+params.boarding_strategy = "random";
 
 % Visualization
 params.show_visu = (params.J <= 10);

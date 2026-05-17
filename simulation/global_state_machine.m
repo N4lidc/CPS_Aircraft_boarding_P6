@@ -38,6 +38,10 @@ switch global_state
             scanner = 1; lambda = cadence.high; filter = "All";
             global_state = "FinalCall";
             fprintf("Hold -> Final Call\n");
+            if ~cadence_pending
+                events = push(events, t, PRIO.CAD, 1, 0);
+                cadence_pending = true;
+            end
             events = push(events, time_close, PRIO.GLOBAL, 7, 0);
         elseif number_incorridor <= resume_incorridor
             scanner = 1; lambda = cadence.mid; filter = "All";
